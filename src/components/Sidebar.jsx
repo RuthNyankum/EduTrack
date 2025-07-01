@@ -4,9 +4,9 @@ import { NavLink } from 'react-router';
 
 const Sidebar = () => {
   return <div>
-    <ul className="menu font-[var(--font-poppins)] text-white rounded-box w-56 ml-5 ">
+    <ul className=" relative menu font-[var(--font-poppins)] text-white rounded-box w-48 ml-10 ">
      <li className="menu-title my-7 text-gray-400">EduTrack</li>
-    <li className="mb-7 hover:bg-white hover:text-[var(--color-primary)] rounded-full">
+    <li className="mb-7 hover:bg-white   hover:text-[var(--color-primary)] rounded-full">
     <NavLink to="/parent/dashboard">
       <LayoutList/>
      
