@@ -4,7 +4,7 @@ import Sidebar from '../components/Sidebar';
 const ParentLayout = () => {
   return (
     <div className="parent-layout">
-      <div className="main-content flex flex-row  ">
+      <div className="main-content flex flex-row bg-[var(--color-primary)] h-[100vh] ">
         {/* Sidebar for parent navigation */}
         <Sidebar userType="parent" />
 
