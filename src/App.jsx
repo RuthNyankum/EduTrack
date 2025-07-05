@@ -1,7 +1,7 @@
 import { createBrowserRouter, RouterProvider } from 'react-router';
 import './App.css';
 import RootLayout from './layout/RootLayout';
-import NotFoundPage from './pages/NotFoundPage';
+// import NotFoundPage from './pages/NotFoundPage';
 import Home from './pages/Home';
 import Login from './pages/auth/Login';
 import ParentLayout from './layout/ParentLayout';
@@ -21,7 +21,7 @@ const router = createBrowserRouter([
   {
     path: '/',
     Component: RootLayout,
-    errorElement: <NotFoundPage />,
+    // errorElement: <NotFoundPage />,
     children: [
       {
         index: true,
@@ -112,10 +112,10 @@ const router = createBrowserRouter([
         ],
       },
       // Catch-all route for unmatched paths
-      {
-        path: '*',
-        Component: NotFoundPage,
-      },
+      // {
+      //   path: '*',
+      //   Component: NotFoundPage,
+      // },
     ],
   },
 ]);
