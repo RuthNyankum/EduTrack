@@ -6,7 +6,8 @@
 
 @theme {
   --font-poppins: Poppins, sans-serif;
-  --color-primary: #5c0680;
+  --color-primaryPurple: #5c0080;
+
 }
 body{
   background-color: #5c0080;
