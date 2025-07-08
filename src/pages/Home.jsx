@@ -1,15 +1,18 @@
 import React from 'react';
 import { features } from '../constant/features';
 import heroImg from '../assets/images/dashboard.png';
+import Footer from '../components/Footer';
+import Navbar from '../components/Navbar';
 
 const Home = () => {
   return (
-    <main className="bg-primaryPurple">
+    <main className="bg-primaryPurple font-poppins">
+      <Navbar />
       {/* Hero Section */}
       <section className="min-h-screen bg-gradient-to-r from-purple-100 via-blue-100 to-white text-gray-900 flex items-center">
-        <div className="max-w-7xl mx-auto px-4 py-32 grid lg:grid-cols-2 gap-12">
+        <div className="max-w-7xl mx-auto px-4 py-16 md:py-32 grid lg:grid-cols-2 gap-12">
           <div>
-            <h1 className="text-5xl lg:text-7xl font-black mb-6 leading-tight text-gray-900">
+            <h1 className="text-5xl lg:text-7xl font-bold mb-6 leading-tight text-gray-900">
               Empowering <br />
               <span className="text-primaryPurple">Education</span> <br />
               Through Technology
@@ -90,6 +93,8 @@ const Home = () => {
           </div>
         </div>
       </section>
+
+      <Footer />
     </main>
   );
 };
