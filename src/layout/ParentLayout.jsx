@@ -1,51 +1,42 @@
-import { useState } from 'react';
-import { Outlet } from 'react-router';
-import Sidebar from '../components/Sidebar';
-import { Menu } from 'lucide-react';
+import { useState } from "react";
+import { Outlet } from "react-router";
+import Sidebar from "../components/Sidebar";
+import { Menu } from "lucide-react";
+import { MdMenuOpen } from "react-icons/md";
+import { HiOutlineMenu } from "react-icons/hi";
 
 const ParentLayout = () => {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isExpand, setIsExpand] = useState(false);
+  const toggleMenu = () => setIsExpand((prev) => !prev);
 
   return (
-    <div className="parent-layout         bg-[#5C0080]   min-h-screen">
-      {/* Hamburger Menu - only visible on small screens */}
-        {/* Mobile Top Bar */}
-      <div className="md:hidden flex justify-between items-center px-4 pt-4">
-        <span className="text-white font-semibold text-lg">EduTrack</span>
-        <button
-          onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-          className="bg-[var(--color-primary)] text-white p-2 rounded"
-        >
-          <Menu />
-        </button>
-      </div>
+    <div className="parent-layout   bg-[var(-- --color-primaryPurple)] min-h-screen ">
+      <div className="py-4 flex gap-5 px-5">
+        <span className="text-white text-center font-semibold text-lg   ">
+          EduTrack
+        </span>
+        <div className="flex  text-4xl">
+          
 
-      <div className="main-content flex relative h-screen overflow-hidden">
-        {/* Sidebar */}
-        <Sidebar isOpen={isSidebarOpen} />
+          <button onClick={toggleMenu} className="text-white  cursor-pointer">
+            <span>{isExpand ? <HiOutlineMenu /> : <MdMenuOpen />}</span>
+
+
+          </button>
+        </div>
+      </div>
+      <hr className="border-t-1  border-white " />
+
+     
+
+      <div className="main-content flex relative h-screen">
+             <Sidebar isExpand={isExpand} />
 
         {/* Main content */}
-        <main
-          className={`
-            content-area 
-            absolute 
-            z-10 
-            top-8 
-            left-4 
-            right-4 
-            bottom-4 
-            bg-white 
-            rounded-2xl 
-            p-4 
-            overflow-y-auto 
-            transition-all 
-            duration-300 
-            w-[calc(100vw-2rem)]
-            md:left-[14rem] 
-            md:w-[calc(100vw-15rem-2rem)]
-            lg:left-[16rem] 
-            lg:w-[calc(100vw-17rem-2rem)]
-          `}
+       <main
+          className={`absolute z-10 top-4 bottom-4 right-4 bg-white 
+            rounded-2xl p-4 overflow-y-auto transition-all duration-300
+            ${isExpand ? "left-[16rem] w-[calc(100vw-17rem-2rem)]" : "left-[5rem] w-[calc(100vw-6rem-2rem)]"}`}
         >
           <Outlet />
         </main>
