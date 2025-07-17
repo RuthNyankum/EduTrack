@@ -16,8 +16,7 @@ const ParentLayout = () => {
           EduTrack
         </span>
         <div className="flex  text-4xl">
-          
-
+      
           <button onClick={toggleMenu} className="text-white  cursor-pointer">
             <span>{isExpand ? <HiOutlineMenu /> : <MdMenuOpen />}</span>
 

@@ -41,10 +41,11 @@ const SIDEBAR = [
     name: "Chat" ,
     icon: <FaRocketchat/> ,
 },
-{
-    link: "/parent/login",
-    name: "Logout" ,
-    icon: <RiLogoutCircleLine/> ,
-},
+// {
+//     link: "/parent/login",
+//     name: "Logout" ,
+//     icon: <RiLogoutCircleLine/> ,
+//     action: "logout"
+// },
 ];
 export default SIDEBAR;
