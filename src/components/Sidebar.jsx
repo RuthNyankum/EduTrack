@@ -1,12 +1,4 @@
-import {
-  LayoutList,
-  BookMarked,
-  ChartSpline,
-  Sheet,
-  Bell,
-  LogOut,
-} from "lucide-react";
-import { useState } from "react";
+
 import { NavLink } from "react-router";
 import SIDEBAR from "./reusableSideBar";
 
@@ -21,26 +13,37 @@ const Sidebar = ({ isExpand }) => {
     >
 
 <div>
-  <ul className="menu font-[var(--font-poppins)] text-white rounded-box w-full p-4">
-    {SIDEBAR.map((item, index) => (
-      <li key={index}>
-        <NavLink
-          to={item.link}
-          className={({ isActive }) =>
-            `flex items-center w-52 h-[2.5rem] gap-4 rounded-full px-2 mt-10 ${
-              isActive
-                ? "bg-white text-[var(--color-primary)]"
-                : "hover:bg-white hover:text-[var(--color-primary)]"
-            }`
-          }
-       >
+  <ul className="menu font-[var(--font-poppins)] text-white rounded-box w-full p-4 pb-0">
+  {SIDEBAR.map((item, index) => (
+    <li key={index}>
+      <NavLink
+        to={item.link}
+        className={({ isActive }) =>
+          `group relative flex items-center w-52 h-[2.5rem] gap-4 rounded-full px-2 mt-10 ${
+            isActive
+              ? "bg-white text-[var(--color-primary)]"
+              : "hover:bg-white hover:text-[var(--color-primary)]"
+          }`
+        }
+      >
         <span className="text-xl font-extrabold">{item.icon}</span>
-                {/* <Icon className="text-xl" /> */}
-                {isExpand && <span className="whitespace-nowrap ">{item.name}</span>}
-              </NavLink>
-      </li>
-    ))}
-  </ul>
+
+        {isExpand ? (
+          <span className="whitespace-nowrap">{item.name}</span>
+        ) : (
+           <span
+          className={`whitespace-nowrap text-[0.8rem] transition-opacity duration-300 ${
+            isExpand ? "opacity-100" : "opacity-0 group-hover:opacity-100"
+          }`}
+        >
+          {item.name}
+        </span>
+        )}
+      </NavLink>
+    </li>
+  ))}
+</ul>
+
 </div>
 
 
