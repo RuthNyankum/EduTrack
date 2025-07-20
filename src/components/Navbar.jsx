@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Menu, X } from 'lucide-react';
+import {NavLink} from 'react-router';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -49,14 +50,14 @@ const Navbar = () => {
 
           {/* Sign In Button - Desktop */}
           <div className="hidden md:block">
-            <button
+            <NavLink to ="/Login"
               className="text-white px-4 py-2 rounded-md text-sm font-medium transition-colors duration-200 cursor-pointer"
               style={{ backgroundColor: '#4a0066' }}
               onMouseEnter={(e) => (e.target.style.backgroundColor = '#3d0052')}
               onMouseLeave={(e) => (e.target.style.backgroundColor = '#4a0066')}
             >
               Sign in
-            </button>
+            </NavLink>
           </div>
 
           {/* Mobile menu button */}
@@ -102,7 +103,8 @@ const Navbar = () => {
                 </a>
               ))}
               {/* Sign In Button - Mobile */}
-              <button
+<NavLink
+  to="/Login"
                 className="w-full text-left text-white px-3 py-2 rounded-md text-base font-medium transition-colors duration-200 mt-2"
                 style={{ backgroundColor: '#3d0052' }}
                 onMouseEnter={(e) =>
@@ -113,7 +115,7 @@ const Navbar = () => {
                 }
               >
                 Sign in
-              </button>
+              </NavLink>
             </div>
           </div>
         )}
