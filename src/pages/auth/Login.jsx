@@ -4,15 +4,18 @@ import { AiOutlineMail } from "react-icons/ai";
 import { GoEyeClosed } from "react-icons/go";
 import { IoKeyOutline } from "react-icons/io5";
 import { RxEyeOpen } from "react-icons/rx";
+import {useAuth} from "./AuthProvider";
 
 const Login = () => {
   const [passwordVisible, setPasswordVisible] = useState (false);
   const [loginForm, setLoginForm] = useState({email: "", password:""})
   const [submitData, setSubmitData] = useState(null);
+  const {login}= useAuth();
 
   const handleSubmit = (e) => {
     const {email,password} = loginForm;
     setSubmitData({email,password})
+    login(email, password);
     console.log('password submited', password);
     console.log('email submited', email);
     e.preventDefault();
