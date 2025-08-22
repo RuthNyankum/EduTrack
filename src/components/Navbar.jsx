@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Menu, X } from 'lucide-react';
 import {NavLink} from 'react-router';
-
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -105,6 +104,7 @@ const Navbar = () => {
               {/* Sign In Button - Mobile */}
 <NavLink
   to="/Login"
+
                 className="w-full text-left text-white px-3 py-2 rounded-md text-base font-medium transition-colors duration-200 mt-2"
                 style={{ backgroundColor: '#3d0052' }}
                 onMouseEnter={(e) =>
