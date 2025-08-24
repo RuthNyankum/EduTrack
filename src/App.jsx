@@ -16,6 +16,7 @@ import TeacherDashboard from './pages/dashboard/TeacherDashboard';
 import TeacherLayout from './layout/TeacherLayout';
 import ParentProfile from './pages/profiles/ParentProfile';
 import TeacherProfile from './pages/profiles/TeacherProfile';
+import AuthProvider from './pages/auth/AuthProvider';
 
 const router = createBrowserRouter([
   {
@@ -120,7 +121,11 @@ const router = createBrowserRouter([
   },
 ]);
 function App() {
-  return <RouterProvider router={router} />;
+  return (
+  <AuthProvider>
+<RouterProvider router={router} />;
+  </AuthProvider>
+  );
 }
 
 export default App;
