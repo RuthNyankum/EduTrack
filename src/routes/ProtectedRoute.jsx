@@ -1,24 +1,18 @@
-import { Outlet } from 'react-router';
+import { Outlet } from "react-router";
 
 const ProtectedRoute = ({ allowedRoles }) => {
-  // Development mode - bypass authentication
-  if (import.meta.env.DEV) {
-    console.log(
-      'Development mode: Bypassing authentication for roles:',
-      allowedRoles
-    );
-    return <Outlet />;
-  }
+  // TEMPORARILY DISABLE AUTH CHECK (for frontend development)
+  return <Outlet />;
 
-  // Your actual authentication logic would go here
-  // const user = useAuth(); // or however you get user data
+  // --- Original code for later ---
+  // const user = useAuth();
   // const hasPermission = user && allowedRoles.includes(user.role);
 
   // if (!hasPermission) {
   //   return <Navigate to="/login" replace />;
   // }
 
-  return <Outlet />;
+  // return <Outlet />;
 };
 
 export default ProtectedRoute;

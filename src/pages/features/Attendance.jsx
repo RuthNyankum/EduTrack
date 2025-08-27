@@ -3,6 +3,7 @@ import React from "react";
 const Attendance = () => {
   const attendance = [
     {
+      id: 1,
       subject: "English",
       sessions: 20,
       present: 4,
@@ -11,6 +12,7 @@ const Attendance = () => {
       remarks: "Very Poor",
     },
     {
+      id: 2,
       subject: "Mathematics",
       sessions: 30,
       present: 30,
@@ -19,6 +21,7 @@ const Attendance = () => {
       remarks: "Excellent",
     },
     {
+      id: 3,
       subject: "Science",
       sessions: 20,
       present: 16,
@@ -27,6 +30,7 @@ const Attendance = () => {
       remarks: "Good",
     },
     {
+      id: 4,
       subject: "History",
       sessions: 10,
       present: 6,
@@ -48,27 +52,24 @@ const Attendance = () => {
       <h1 className="text-2xl font-bold mb-6 text-slate-800">Attendance</h1>
 
       <table className="w-full border-collapse border border-gray-300 rounded-lg shadow-sm">
-       <caption className="caption-bottom text-sm text-primaryPurple italic mt-2">
-  <div className="flex  items-center gap-4 my-8">
-    <div className="flex items-center gap-1">
-      <span className="w-5 h-5 bg-red-800 rounded"></span>
-      <span>At Risk</span>
-    </div>
-    <div className="flex items-center gap-1">
-      <span className="w-5 h-5 bg-yellow-500 rounded"></span>
-      <span>Average</span>
-    </div>
-    <div className="flex items-center gap-1">
-      <span className="w-5 h-5 bg-green-800 rounded"></span>
-      <span>Excellent</span>
-    </div>
-  </div>
+        <caption className="caption-bottom text-sm text-primaryPurple italic mt-2">
+          <div className="flex items-center gap-4 my-8">
+            <div className="flex items-center gap-1">
+              <span className="w-5 h-5 bg-red-800 rounded"></span>
+              <span>At Risk</span>
+            </div>
+            <div className="flex items-center gap-1">
+              <span className="w-5 h-5 bg-yellow-500 rounded"></span>
+              <span>Average</span>
+            </div>
+            <div className="flex items-center gap-1">
+              <span className="w-5 h-5 bg-green-800 rounded"></span>
+              <span>Excellent</span>
+            </div>
+          </div>
+          <p>Note: Attendance records are updated per subject</p>
+        </caption>
 
-  <p>Note: Attendance records are updated per subject</p>
-</caption>
-
-
-        {/* Table Header */}
         <thead className="bg-primaryPurple text-white">
           <tr>
             <th className="border border-gray-300 px-4 py-2 text-left font-semibold">
@@ -92,12 +93,11 @@ const Attendance = () => {
           </tr>
         </thead>
 
-        {/* Table Body */}
         <tbody>
           {attendance.length > 0 ? (
-            attendance.map((record, index) => (
+            attendance.map((record) => (
               <tr
-                key={index}
+                key={record.id}
                 className={`hover:bg-gray-50 ${getRowColor(record.attendance)}`}
               >
                 <td className="border border-gray-300 px-4 py-2">

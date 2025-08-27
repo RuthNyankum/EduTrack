@@ -1,15 +1,34 @@
-import { Outlet } from 'react-router';
-import Sidebar from '../components/Sidebar';
+import { useState } from "react";
+import { Outlet } from "react-router";
+import Sidebar from "../components/Sidebar";
+import Header from "../components/Header";
 
 const TeacherLayout = () => {
-  return (
-    <div className="teacher-layout">
-      <div className="main-content">
-        {/* Sidebar for teacher navigation */}
-        <Sidebar userType="teacher" />
+  const [isExpand, setIsExpand] = useState(false);
+  const toggleMenu = () => setIsExpand((prev) => !prev);
 
-        {/* This is where the nested route components will render */}
-        <main className="content-area">
+  return (
+    <div className="teacher-layout bg-[var(--color-primaryPurple)] min-h-screen">
+      {/* Header Component */}
+      <Header isExpand={isExpand} toggleMenu={toggleMenu} />
+
+      <hr className="border-t-1 border-white" />
+
+      <div className="main-content flex relative h-screen">
+        {/* Sidebar */}
+        <Sidebar isExpand={isExpand} userType="teacher" />
+
+        {/* Main content area */}
+        <main
+          className={`absolute z-10 top-4 bottom-4 right-4 ml-10 bg-white
+            rounded-2xl p-4 overflow-y-auto transition-all duration-300
+            ${
+              isExpand
+                ? "left-[16rem] w-[calc(100vw-17rem-2rem)]"
+                : "left-[5rem] w-[calc(100vw-6rem-2rem)]"
+            }`}
+        >
+          {/* This Outlet should render the specific route content (Subject, TeacherProfile, etc.) */}
           <Outlet />
         </main>
       </div>
