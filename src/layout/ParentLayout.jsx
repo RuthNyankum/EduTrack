@@ -20,7 +20,7 @@ const ParentLayout = () => {
 
         {/* Main content area */}
         <main
-          className={`absolute z-10 top-4 bottom-4 right-4 ml-10 bg-white
+          className={`absolute z-50 top-4 bottom-4 right-4 ml-10 bg-white
             rounded-2xl p-4 overflow-y-auto transition-all duration-300
             ${
               isExpand

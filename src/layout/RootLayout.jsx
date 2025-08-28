@@ -30,7 +30,7 @@ const RootLayout = () => {
     //   <Outlet />
     // </div>
     <>
-      <Outlet />
+      <Outlet  />
     </>
   );
 };
