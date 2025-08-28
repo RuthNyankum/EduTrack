@@ -83,7 +83,6 @@
 import { useState } from "react";
 import { NavLink } from "react-router";
 import { PARENT_SIDEBAR, TEACHER_SIDEBAR } from "./sidebars";
-import ConfirmationModal from "./confirmationModal";
 import { RiLogoutCircleLine } from "react-icons/ri";
 
 const Sidebar = ({ isExpand, userType }) => {
@@ -102,40 +101,50 @@ const Sidebar = ({ isExpand, userType }) => {
       <ul className="menu font-[var(--font-poppins)] text-white w-full pb-0">
         {SIDEBAR.map((item, index) => {
           const Icon = item.icon;
+
           return (
-            <li key={index} className="flex justify-start mt-8">
+            <li key={index} className="flex justify-start  mt-8">
               <NavLink
                 to={item.link}
                 className={({ isActive }) =>
-                  `group relative inline-flex w-32 items-center h-[2.5rem] gap-3 rounded-full px-3 transition-colors ${
+                  `group  inline-flex items-center h-[2.5rem] gap-3 rounded-full px-3 w-full transition-colors ${
                     isActive
-                      ? "bg-white text-[var(--color-primary)]"
+                      ? "bg-white relative text-[var(--color-primary)]"
                       : "hover:bg-white hover:text-[var(--color-primaryPurple)]"
                   }`
                 }
               >
                 <Icon className="text-xl font-extrabold" />
-                {isExpand && (
-                  <span className="whitespace-nowrap">{item.name}</span>
-                )}
+
+                <span
+                  className={`whitespace-nowrap transition-all duration-300 ease-in-out ${
+                    isExpand
+                      ? "opacity-100"
+                      : "opacity-0 group-hover:opacity-100"
+                  }`}
+                >
+                  {item.name}
+                </span>
               </NavLink>
             </li>
           );
         })}
-        <button
-          onClick={handleItemClick}
-          className="group mt-10 cursor-pointer flex items-center w-52 h-[2.5rem] rounded-full px-2 gap-4 text-white hover:bg-white hover:text-[var(--color-primaryPurple)]"
-        >
-          <RiLogoutCircleLine className="text-xl font-extrabold" />
-          {isExpand && <span>Logout</span>}
-        </button>
+       <NavLink
+  to="/Login"
+  onClick={handleItemClick}
+  className="group mt-10 cursor-pointer flex items-center w-52 h-[2.5rem] rounded-full px-2 gap-4 text-white hover:bg-white hover:text-[var(--color-primaryPurple)]"
+>
+  <RiLogoutCircleLine className="text-xl font-extrabold" />
+  <span className="opacity-0 group-hover:opacity-100 transition-opacity duration-300">Logout</span>
+</NavLink>
+
       </ul>
 
-      <ConfirmationModal
+      {/* <ConfirmationModal
         isOpen={showModal}
         onClose={() => setShowModal(false)}
         onConfirm={() => setShowModal(false)}
-      />
+      /> */}
     </div>
   );
 };
