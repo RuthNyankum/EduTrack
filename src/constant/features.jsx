@@ -42,33 +42,33 @@
 
 export const features = [
   {
-    icon: '📊',
-    title: 'Real-time Analytics',
-    desc: 'Track student progress with detailed reports and dashboards.',
+    icon: "📊",
+    title: "Real-time Analytics",
+    desc: "Track student progress with detailed reports and dashboards.",
   },
   {
-    icon: '✅',
-    title: 'Attendance Management',
-    desc: 'Track attendance and notify parents instantly.',
+    icon: "✅",
+    title: "Attendance Management",
+    desc: "Track attendance and notify parents instantly.",
   },
   {
-    icon: '📝',
-    title: 'Assessment Tools',
-    desc: 'Create, assign, and grade assessments with ease.',
+    icon: "📝",
+    title: "Assessment Tools",
+    desc: "Create, assign, and grade assessments with ease.",
   },
   {
-    icon: '👥',
-    title: 'Parent Communication',
-    desc: 'Connect teachers and parents through real-time updates.',
+    icon: "👥",
+    title: "Parent Communication",
+    desc: "Connect teachers and parents through real-time updates.",
   },
   {
-    icon: '📚',
-    title: 'Subject Management',
-    desc: 'Organize curriculum and assignments by subject.',
+    icon: "📚",
+    title: "Subject Management",
+    desc: "Organize curriculum and assignments by subject.",
   },
   {
-    icon: '🔔',
-    title: 'Smart Notifications',
-    desc: 'Instant alerts for deadlines, grades, and announcements.',
+    icon: "🔔",
+    title: "Smart Notifications",
+    desc: "Instant alerts for deadlines, grades, and announcements.",
   },
 ];

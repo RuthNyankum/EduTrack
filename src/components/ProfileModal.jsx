@@ -12,7 +12,7 @@ function ProfileModal({ isOpen, onClose }) {
   const userRole = user.role || user.userType || "teacher";
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center">
+    <div className="fixed inset-0 z-50 flex items-center justify-center font-poppins">
       {/* Backdrop */}
       <div
         className="absolute inset-0 bg-black/40 backdrop-blur-sm"

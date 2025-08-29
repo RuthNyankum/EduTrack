@@ -20,12 +20,16 @@ const COLORS = ["#22C55E", "#e7d637ff", "#3B82F6", "#F97316", "#EC4899"];
 
 const ParentDashboard = () => {
   return (
-    <div className="p-6 min-h-screen ">
-      <h1 className="text-2xl font-bold mb-6 text-slate-800">Student Overview</h1>
+    <div className="p-6 min-h-screen font-poppins">
+      <h1 className="text-2xl font-bold mb-6 text-slate-800">
+        Student Overview
+      </h1>
 
       {studentOverview.map((data, index) => (
-        <div key={index} className="grid md:grid-cols-3 lg:grid-cols-4 gap-6 mb-10">
-          
+        <div
+          key={index}
+          className="grid md:grid-cols-3 lg:grid-cols-4 gap-6 mb-10"
+        >
           {/* Student Info Card */}
           <div className="bg-gradient-to-r from-purple-600 to-indigo-600 shadow-md rounded-2xl p-4 flex items-center gap-4 text-white">
             <img
@@ -41,7 +45,9 @@ const ParentDashboard = () => {
 
           {/* Performance Overview with Bar Chart */}
           <div className="bg-white shadow-lg rounded-2xl p-6 col-span-2 border border-purple-100">
-            <h2 className="text-sm font-semibold text-purple-700 mb-3">Subject Scores</h2>
+            <h2 className="text-sm font-semibold text-purple-700 mb-3">
+              Subject Scores
+            </h2>
             <ResponsiveContainer width="100%" height={200}>
               <BarChart data={data.subjects.all}>
                 <CartesianGrid strokeDasharray="3 3" stroke="#E5E7EB" />
@@ -55,21 +61,30 @@ const ParentDashboard = () => {
 
           {/* Attendance with Line Chart */}
           <div className="bg-white shadow-lg rounded-2xl p-6 border border-purple-100">
-            <h2 className="text-sm font-semibold text-purple-700 mb-3">Attendance Trend</h2>
+            <h2 className="text-sm font-semibold text-purple-700 mb-3">
+              Attendance Trend
+            </h2>
             <ResponsiveContainer width="100%" height={200}>
               <LineChart data={data.attendance.trend}>
                 <CartesianGrid strokeDasharray="3 3" stroke="#E5E7EB" />
                 <XAxis dataKey="month" stroke="#6B7280" />
                 <YAxis stroke="#6B7280" />
                 <Tooltip />
-                <Line type="monotone" dataKey="percentage" stroke="#22C55E" strokeWidth={3} />
+                <Line
+                  type="monotone"
+                  dataKey="percentage"
+                  stroke="#22C55E"
+                  strokeWidth={3}
+                />
               </LineChart>
             </ResponsiveContainer>
           </div>
 
           {/* Activities Pie Chart */}
           <div className="bg-white shadow-lg rounded-2xl p-6 border border-purple-100">
-            <h2 className="text-sm font-semibold text-purple-700 mb-3">Activity Status</h2>
+            <h2 className="text-sm font-semibold text-purple-700 mb-3">
+              Activity Status
+            </h2>
             <ResponsiveContainer width="100%" height={200}>
               <PieChart>
                 <Pie
@@ -82,7 +97,10 @@ const ParentDashboard = () => {
                   label
                 >
                   {data.recentActivity.map((entry, idx) => (
-                    <Cell key={`cell-${idx}`} fill={COLORS[idx % COLORS.length]} />
+                    <Cell
+                      key={`cell-${idx}`}
+                      fill={COLORS[idx % COLORS.length]}
+                    />
                   ))}
                 </Pie>
                 <Tooltip />
@@ -93,7 +111,9 @@ const ParentDashboard = () => {
 
           {/* Alerts & Reminders */}
           <div className="bg-white shadow-lg rounded-2xl p-6 border border-purple-100">
-            <p className="text-sm font-semibold text-red-700 mb-3">Alerts & Reminders</p>
+            <p className="text-sm font-semibold text-red-700 mb-3">
+              Alerts & Reminders
+            </p>
             {data.alertsAndReminders?.length > 0 ? (
               <ul className="text-sm  text-red-700 space-y-2">
                 {data.alertsAndReminders.map((alert, idx) => (
@@ -107,7 +127,9 @@ const ParentDashboard = () => {
 
           {/* Teacher Feedback */}
           <div className="bg-white shadow-lg rounded-2xl p-6 col-span-2 border border-purple-100">
-            <p className="text-sm font-semibold text-purple-700 mb-3">Teacher Feedback</p>
+            <p className="text-sm font-semibold text-purple-700 mb-3">
+              Teacher Feedback
+            </p>
             {data.teacherFeedback?.length > 0 ? (
               <ul className="space-y-2">
                 {data.teacherFeedback.map((feedback, idx) => (
@@ -128,6 +150,5 @@ const ParentDashboard = () => {
     </div>
   );
 };
-
 
 export default ParentDashboard;

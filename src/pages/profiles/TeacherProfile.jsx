@@ -52,7 +52,7 @@ function TeacherProfile({ isModal = false }) {
     <div className={containerClass}>
       <div className={cardClass}>
         {/* Profile Image */}
-        <div className="flex-shrink-0 flex flex-col items-center">
+        <div className="flex-shrink-0 flex flex-col items-center font-poppins">
           <img
             src={formData.profileImage || teacher.profileImage || defaultImg}
             alt="Profile"
@@ -69,7 +69,7 @@ function TeacherProfile({ isModal = false }) {
         </div>
 
         {/* Profile Details */}
-        <div className="w-full flex flex-col gap-4 text-center md:text-left">
+        <div className="w-full flex flex-col gap-4 text-center md:text-left font-poppins">
           <div>
             <h1 className="text-2xl font-bold text-purple-700">
               {teacher.name}

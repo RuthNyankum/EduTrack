@@ -11,7 +11,7 @@ function ClassDetails({ classId, onBack }) {
 
   if (!selectedClass) {
     return (
-      <div className="max-w-4xl mx-auto p-6 text-center">
+      <div className="max-w-4xl mx-auto p-6 text-center font-poppins">
         <p className="mt-10 text-red-500 font-medium">Class not found.</p>
         <button
           onClick={onBack}

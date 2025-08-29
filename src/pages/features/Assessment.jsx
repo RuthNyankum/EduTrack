@@ -26,7 +26,7 @@ const Assessment = () => {
   ];
 
   return (
-    <div className="p-6 min-h-screen text-black">
+    <div className="p-6 min-h-screen text-black font-poppins">
       <h1 className="text-2xl font-bold mb-6 text-slate-800">Assessments</h1>
 
       <table className="w-full border-collapse border border-gray-300 rounded-lg shadow-sm">

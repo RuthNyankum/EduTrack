@@ -17,7 +17,7 @@ function TeacherDashboard() {
   }
 
   return (
-    <div className="max-w-7xl mx-auto p-6">
+    <div className=" mx-auto p-6 font-poppins">
       {/* <TeacherProfileHeader /> */}
       <h1 className="text-2xl font-bold text-gray-800 mb-6">
         Welcome Teacher {teacher.name}
