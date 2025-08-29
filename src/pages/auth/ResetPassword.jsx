@@ -1,4 +1,3 @@
-// src/pages/auth/ResetPassword.jsx
 import React, { useState } from "react";
 import { GoEyeClosed } from "react-icons/go";
 import { IoKeyOutline } from "react-icons/io5";
@@ -21,12 +20,17 @@ const ResetPassword = () => {
   return (
     <div className="bg-white h-screen flex items-center justify-center px-4">
       <div className="w-full max-w-md p-6 flex flex-col gap-6">
-        <h2 className="text-3xl font-bold text-center text-purple-800">EduTrack</h2>
+        <h2 className="text-3xl font-bold text-center text-purple-800">
+          EduTrack
+        </h2>
 
         <form onSubmit={handleSubmit} className="w-full flex flex-col gap-5">
           {/* New Password */}
           <div className="flex flex-col gap-1">
-            <label htmlFor="newPassword" className="text-sm font-medium text-gray-700">
+            <label
+              htmlFor="newPassword"
+              className="text-sm font-medium text-gray-700"
+            >
               New Password
             </label>
             <div className="flex items-center border border-gray-300 rounded-md px-3 py-2 gap-2">
@@ -38,7 +42,9 @@ const ResetPassword = () => {
                 required
                 placeholder="Enter your new password"
                 value={form.newPassword}
-                onChange={(e) => setForm({ ...form, newPassword: e.target.value })}
+                onChange={(e) =>
+                  setForm({ ...form, newPassword: e.target.value })
+                }
                 className="flex-1 outline-none text-sm"
               />
               <div
@@ -52,7 +58,10 @@ const ResetPassword = () => {
 
           {/* Confirm Password */}
           <div className="flex flex-col gap-1">
-            <label htmlFor="confirmPassword" className="text-sm font-medium text-gray-700">
+            <label
+              htmlFor="confirmPassword"
+              className="text-sm font-medium text-gray-700"
+            >
               Confirm Password
             </label>
             <div className="flex items-center border border-gray-300 rounded-md px-3 py-2 gap-2">
@@ -64,7 +73,9 @@ const ResetPassword = () => {
                 required
                 placeholder="Confirm password"
                 value={form.confirmPassword}
-                onChange={(e) => setForm({ ...form, confirmPassword: e.target.value })}
+                onChange={(e) =>
+                  setForm({ ...form, confirmPassword: e.target.value })
+                }
                 className="flex-1 outline-none text-sm"
               />
               <div

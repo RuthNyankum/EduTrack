@@ -27,7 +27,7 @@ function ParentProfile() {
   };
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-8 font-poppins">
       {/* Profile Section */}
       <div className="flex flex-col md:flex-row gap-6 items-center text-center md:text-left">
         {/* Profile Image */}

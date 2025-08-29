@@ -2,7 +2,7 @@ import React from "react";
 import defaultImg from "../assets/images/profileImg.png";
 const ChildCard = ({ name, classLevel, profileImage, onViewDashboard }) => {
   return (
-    <div className="bg-gray-100 rounded-2xl shadow p-4 w-full max-w-xs text-center mx-auto">
+    <div className="bg-gray-100 rounded-2xl shadow p-4 w-full max-w-xs text-center mx-auto font-poppins">
       {/* Profile Image */}
       <div className="flex justify-center mb-3">
         <img

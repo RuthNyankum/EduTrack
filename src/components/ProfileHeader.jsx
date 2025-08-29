@@ -20,7 +20,7 @@ function ProfileHeader() {
   return (
     <>
       <div
-        className="flex items-center gap-3 cursor-pointer hover:bg-white/10 rounded-lg p-2 transition-colors"
+        className="flex items-center gap-3 cursor-pointer hover:bg-white/10 rounded-lg p-2 transition-colors font-poppins"
         onClick={handleProfileClick}
       >
         <img

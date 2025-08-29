@@ -6,7 +6,7 @@ import ProfileHeader from "./ProfileHeader";
 
 const Header = ({ isExpand, toggleMenu }) => {
   return (
-    <div className="py-4  flex justify-between items-center px-5">
+    <div className="py-4  flex justify-between items-center px-5 font-poppins">
       <div className="flex items-center gap-5">
         <span className="text-white font-semibold text-lg">EduTrack</span>
         <div className="flex text-4xl">

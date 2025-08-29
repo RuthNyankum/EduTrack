@@ -1,10 +1,10 @@
-import React from 'react';
-import { BsInstagram, BsLinkedin, BsTwitterX } from 'react-icons/bs';
-import { Link } from 'react-router';
+import React from "react";
+import { BsInstagram, BsLinkedin, BsTwitterX } from "react-icons/bs";
+import { Link } from "react-router";
 
 const Footer = () => {
   return (
-    <footer className="text-white py-12">
+    <footer className="text-white py-12 font-poppins">
       <div className="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-4 gap-10">
         {/* Logo and Description */}
         <div className="text-center md:text-left">
@@ -28,12 +28,12 @@ const Footer = () => {
                 to="#features"
                 className="hover:text-white transition-colors duration-200"
                 onMouseEnter={(e) =>
-                  (e.target.style.backgroundColor = '#4a0066')
+                  (e.target.style.backgroundColor = "#4a0066")
                 }
                 onMouseLeave={(e) =>
-                  (e.target.style.backgroundColor = 'transparent')
+                  (e.target.style.backgroundColor = "transparent")
                 }
-                style={{ padding: '4px 8px', borderRadius: '4px' }}
+                style={{ padding: "4px 8px", borderRadius: "4px" }}
               >
                 Features
               </Link>
@@ -43,12 +43,12 @@ const Footer = () => {
                 href="#"
                 className="hover:text-white transition-colors duration-200"
                 onMouseEnter={(e) =>
-                  (e.target.style.backgroundColor = '#4a0066')
+                  (e.target.style.backgroundColor = "#4a0066")
                 }
                 onMouseLeave={(e) =>
-                  (e.target.style.backgroundColor = 'transparent')
+                  (e.target.style.backgroundColor = "transparent")
                 }
-                style={{ padding: '4px 8px', borderRadius: '4px' }}
+                style={{ padding: "4px 8px", borderRadius: "4px" }}
               >
                 Pricing
               </a>
@@ -58,12 +58,12 @@ const Footer = () => {
                 href="#"
                 className="hover:text-white transition-colors duration-200"
                 onMouseEnter={(e) =>
-                  (e.target.style.backgroundColor = '#4a0066')
+                  (e.target.style.backgroundColor = "#4a0066")
                 }
                 onMouseLeave={(e) =>
-                  (e.target.style.backgroundColor = 'transparent')
+                  (e.target.style.backgroundColor = "transparent")
                 }
-                style={{ padding: '4px 8px', borderRadius: '4px' }}
+                style={{ padding: "4px 8px", borderRadius: "4px" }}
               >
                 Updates
               </a>
@@ -73,12 +73,12 @@ const Footer = () => {
                 href="#"
                 className="hover:text-white transition-colors duration-200"
                 onMouseEnter={(e) =>
-                  (e.target.style.backgroundColor = '#4a0066')
+                  (e.target.style.backgroundColor = "#4a0066")
                 }
                 onMouseLeave={(e) =>
-                  (e.target.style.backgroundColor = 'transparent')
+                  (e.target.style.backgroundColor = "transparent")
                 }
-                style={{ padding: '4px 8px', borderRadius: '4px' }}
+                style={{ padding: "4px 8px", borderRadius: "4px" }}
               >
                 Security
               </a>
@@ -95,12 +95,12 @@ const Footer = () => {
                 href="#"
                 className="hover:text-white transition-colors duration-200"
                 onMouseEnter={(e) =>
-                  (e.target.style.backgroundColor = '#4a0066')
+                  (e.target.style.backgroundColor = "#4a0066")
                 }
                 onMouseLeave={(e) =>
-                  (e.target.style.backgroundColor = 'transparent')
+                  (e.target.style.backgroundColor = "transparent")
                 }
-                style={{ padding: '4px 8px', borderRadius: '4px' }}
+                style={{ padding: "4px 8px", borderRadius: "4px" }}
               >
                 Help Center
               </a>
@@ -110,12 +110,12 @@ const Footer = () => {
                 href="#"
                 className="hover:text-white transition-colors duration-200"
                 onMouseEnter={(e) =>
-                  (e.target.style.backgroundColor = '#4a0066')
+                  (e.target.style.backgroundColor = "#4a0066")
                 }
                 onMouseLeave={(e) =>
-                  (e.target.style.backgroundColor = 'transparent')
+                  (e.target.style.backgroundColor = "transparent")
                 }
-                style={{ padding: '4px 8px', borderRadius: '4px' }}
+                style={{ padding: "4px 8px", borderRadius: "4px" }}
               >
                 Documentation
               </a>
@@ -125,12 +125,12 @@ const Footer = () => {
                 href="#contact"
                 className="hover:text-white transition-colors duration-200"
                 onMouseEnter={(e) =>
-                  (e.target.style.backgroundColor = '#4a0066')
+                  (e.target.style.backgroundColor = "#4a0066")
                 }
                 onMouseLeave={(e) =>
-                  (e.target.style.backgroundColor = 'transparent')
+                  (e.target.style.backgroundColor = "transparent")
                 }
-                style={{ padding: '4px 8px', borderRadius: '4px' }}
+                style={{ padding: "4px 8px", borderRadius: "4px" }}
               >
                 Contact Us
               </a>
@@ -145,27 +145,27 @@ const Footer = () => {
             <a
               href="#"
               className="w-10 h-10 rounded-lg flex items-center justify-center transition-colors duration-200"
-              style={{ backgroundColor: '#4a0066' }}
-              onMouseEnter={(e) => (e.target.style.backgroundColor = '#3d0052')}
-              onMouseLeave={(e) => (e.target.style.backgroundColor = '#4a0066')}
+              style={{ backgroundColor: "#4a0066" }}
+              onMouseEnter={(e) => (e.target.style.backgroundColor = "#3d0052")}
+              onMouseLeave={(e) => (e.target.style.backgroundColor = "#4a0066")}
             >
               <BsLinkedin />
             </a>
             <a
               href="#"
               className="w-10 h-10 rounded-lg flex items-center justify-center transition-colors duration-200"
-              style={{ backgroundColor: '#4a0066' }}
-              onMouseEnter={(e) => (e.target.style.backgroundColor = '#3d0052')}
-              onMouseLeave={(e) => (e.target.style.backgroundColor = '#4a0066')}
+              style={{ backgroundColor: "#4a0066" }}
+              onMouseEnter={(e) => (e.target.style.backgroundColor = "#3d0052")}
+              onMouseLeave={(e) => (e.target.style.backgroundColor = "#4a0066")}
             >
               <BsTwitterX />
             </a>
             <a
               href="#"
               className="w-10 h-10 rounded-lg flex items-center justify-center transition-colors duration-200"
-              style={{ backgroundColor: '#4a0066' }}
-              onMouseEnter={(e) => (e.target.style.backgroundColor = '#3d0052')}
-              onMouseLeave={(e) => (e.target.style.backgroundColor = '#4a0066')}
+              style={{ backgroundColor: "#4a0066" }}
+              onMouseEnter={(e) => (e.target.style.backgroundColor = "#3d0052")}
+              onMouseLeave={(e) => (e.target.style.backgroundColor = "#4a0066")}
             >
               <BsInstagram />
             </a>

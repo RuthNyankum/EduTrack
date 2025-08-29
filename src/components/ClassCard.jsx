@@ -7,7 +7,7 @@ function ClassCard({
   onView,
 }) {
   return (
-    <div className="bg-white shadow-md rounded-xl p-5 flex flex-col gap-3">
+    <div className="bg-white shadow-md rounded-xl p-5 flex flex-col gap-3 font-poppins">
       <h3 className="text-lg font-bold text-gray-800">{className}</h3>
       <p className="text-gray-600 text-sm">Students: {students}</p>
       <p className="text-gray-600 text-sm">Assessment: {assessment}</p>
