@@ -1,7 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
+
+
+const useAuth = () => {
+  return { user: { role: "teacher" } };
+};
 
 const TermReport = () => {
-  const reports = [
+  const { user } = useAuth();
+  const userType = user?.role || "parent";
+
+  const [reports, setReports] = useState([
     {
       id: 1,
       subject: "Mathematics",
@@ -32,7 +40,25 @@ const TermReport = () => {
       grade: "4",
       remarks: "Needs more focus and revision.",
     },
-  ];
+  ]);
+
+  const [editingRow, setEditingRow] = useState(null);
+
+  const handleChange = (id, field, value) => {
+    setReports((prev) =>
+      prev.map((r) => (r.id === id ? { ...r, [field]: value } : r))
+    );
+  };
+
+  const handleToggleEdit = (id) => {
+    if (editingRow === id) {
+      // Save
+      console.log("Saved row:", reports.find((r) => r.id === id));
+      setEditingRow(null);
+    } else {
+      setEditingRow(id);
+    }
+  };
 
   const handleDownload = () => {
     alert("PDF download triggered!");
@@ -66,6 +92,11 @@ const TermReport = () => {
             <th className="border border-gray-300 px-4 py-2 text-left font-semibold">
               Teacher's Remarks
             </th>
+            {userType === "teacher" && (
+              <th className="border border-gray-300 px-4 py-2 text-left font-semibold">
+                Action
+              </th>
+            )}
           </tr>
         </thead>
 
@@ -75,24 +106,109 @@ const TermReport = () => {
               <td className="border border-gray-300 px-4 py-2">
                 {item.subject}
               </td>
+
+              {/* Test Avg */}
               <td className="border border-gray-300 px-4 py-2">
-                {item.testAvg}%
+                {editingRow === item.id && userType === "teacher" ? (
+                  <input
+                    type="number"
+                    value={item.testAvg}
+                    onChange={(e) =>
+                      handleChange(item.id, "testAvg", Number(e.target.value))
+                    }
+                    className="border rounded px-2 w-16"
+                  />
+                ) : (
+                  `${item.testAvg}%`
+                )}
               </td>
+
+              {/* Assignment Avg */}
               <td className="border border-gray-300 px-4 py-2">
-                {item.assignmentAvg}%
+                {editingRow === item.id && userType === "teacher" ? (
+                  <input
+                    type="number"
+                    value={item.assignmentAvg}
+                    onChange={(e) =>
+                      handleChange(
+                        item.id,
+                        "assignmentAvg",
+                        Number(e.target.value)
+                      )
+                    }
+                    className="border rounded px-2 w-16"
+                  />
+                ) : (
+                  `${item.assignmentAvg}%`
+                )}
               </td>
+
+              {/* Exams */}
               <td className="border border-gray-300 px-4 py-2">
-                {item.exams}%
+                {editingRow === item.id && userType === "teacher" ? (
+                  <input
+                    type="number"
+                    value={item.exams}
+                    onChange={(e) =>
+                      handleChange(item.id, "exams", Number(e.target.value))
+                    }
+                    className="border rounded px-2 w-16"
+                  />
+                ) : (
+                  `${item.exams}%`
+                )}
               </td>
+
+              {/* Overall */}
               <td className="border border-gray-300 px-4 py-2">
                 {item.overall}%
               </td>
+
+              {/* Grade */}
               <td className="border border-gray-300 px-4 py-2 font-semibold">
-                {item.grade}
+                {editingRow === item.id && userType === "teacher" ? (
+                  <select
+                    value={item.grade}
+                    onChange={(e) => handleChange(item.id, "grade", e.target.value)}
+                    className="border rounded px-2"
+                  >
+                    <option value="1">1 - Excellent</option>
+                    <option value="2">2 - Good</option>
+                    <option value="3">3 - Fair</option>
+                    <option value="4">4 - Poor</option>
+                  </select>
+                ) : (
+                  item.grade
+                )}
               </td>
+
+              {/* Remarks */}
               <td className="border border-gray-300 px-4 py-2 italic">
-                {item.remarks}
+                {editingRow === item.id && userType === "teacher" ? (
+                  <input
+                    type="text"
+                    value={item.remarks}
+                    onChange={(e) =>
+                      handleChange(item.id, "remarks", e.target.value)
+                    }
+                    className="border rounded px-2 w-full"
+                  />
+                ) : (
+                  item.remarks
+                )}
               </td>
+
+              {/* Action (Teacher only) */}
+              {userType === "teacher" && (
+                <td className="border border-gray-300 px-4 py-2">
+                  <button
+                    onClick={() => handleToggleEdit(item.id)}
+                    className="text-blue-600 hover:underline"
+                  >
+                    {editingRow === item.id ? "💾 Save" : "✏️ Edit"}
+                  </button>
+                </td>
+              )}
             </tr>
           ))}
         </tbody>
