@@ -18,6 +18,7 @@ import TeacherProfile from "./pages/profiles/TeacherProfile";
 import AuthProvider from "./pages/auth/AuthProvider";
 import { TeacherProvider } from "./context/TeacherContext";
 import { ParentProvider } from "./context/ParentContext";
+import Register from "./pages/auth/Register";
 
 const router = createBrowserRouter([
   {
@@ -30,6 +31,7 @@ const router = createBrowserRouter([
     children: [
       { index: true, element: <Home /> },
       { path: "/login", element: <Login /> },
+      {path: "/register", element: <Register/>},
 
       // Parent Routes - wrapped with ParentProvider
       {
