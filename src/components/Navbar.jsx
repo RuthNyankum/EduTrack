@@ -58,6 +58,16 @@ const Navbar = () => {
             >
               Sign in
             </NavLink>
+
+             <NavLink
+              to="/register"
+              className="text-white px-4 py-2 rounded-md text-sm font-medium transition-colors duration-200 cursor-pointer"
+              style={{ backgroundColor: "#4a0066" }}
+              onMouseEnter={(e) => (e.target.style.backgroundColor = "#3d0052")}
+              onMouseLeave={(e) => (e.target.style.backgroundColor = "#4a0066")}
+            >
+            Register
+            </NavLink>
           </div>
 
           {/* Mobile menu button */}
