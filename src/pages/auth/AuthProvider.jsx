@@ -1,74 +1,73 @@
 import { createContext, useContext, useState, useEffect } from "react";
-import { useLocation } from "react-router";
-
+import { useLocation, useNavigate } from "react-router-dom";
+import { api } from "../../config/axios";
 export const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
   const location = useLocation();
+  const navigate = useNavigate();
   const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true); // new: track loading state
 
-  // Auto-detect user role based on current route and set dummy data
+  // ✅ Fetch logged-in user when app loads
   useEffect(() => {
-    const currentPath = location.pathname;
+    const fetchUser = async () => {
+      try {
+        const res = await api.get("/auth/profile"); // backend should use JWT cookie
+        setUser(res.data.user);
+      } catch (err) {
+        console.log("No active session:", err.response?.data?.message || err.message);
+        setUser(null);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchUser();
+  }, []);
 
-    if (currentPath.includes("/parent")) {
-      setUser({
-        email: "vida.amoah@example.com",
-        role: "parent",
-        name: "Vida Amoah",
-        userType: "parent",
-        canEdit: false, // Key change: disable editing for route-based detection
-      });
-    } else if (currentPath.includes("/teacher")) {
-      setUser({
-        email: "elizabeth.brown@school.edu",
-        role: "teacher",
-        name: "Elizabeth Brown",
-        userType: "teacher",
-        title: "5th Grade Mathematics Teacher",
-        canEdit: false, // Key change: disable editing for route-based detection
-      });
-    } else if (currentPath === "/" || currentPath === "/login") {
-      setUser(null);
-    }
-  }, [location.pathname]);
+  // ✅ Login function (handles redirection based on userId)
+const login = async (userId, password) => {
+  try {
+    const res = await api.post("/auth/login", { userId, password });
+    const user = res.data.user;
+    setUser(user);
 
-  const login = (email, password, role = "teacher") => {
-    console.log("Login attempt:", { email, password, role });
-
-    // When explicitly logging in, allow editing
-    if (role === "teacher") {
-      setUser({
-        email: "elizabeth.brown@school.edu",
-        role: "teacher",
-        name: "Elizabeth Brown",
-        userType: "teacher",
-        title: "5th Grade Mathematics Teacher",
-        canEdit: true, // Allow editing for logged-in users
-      });
+    // ✅ Redirect user based on userId prefix
+    if (user.userId.toLowerCase().startsWith("tch")) {
+      console.log("Teacher logged in");
+      navigate("/teacher/dashboard");
+    } else if (user.userId.toLowerCase().startsWith("stu")) {
+      console.log("Parent logged in");
+      navigate("/parent/dashboard");
     } else {
-      setUser({
-        email: "vida.amoah@example.com",
-        role: "parent",
-        name: "Vida Amoah",
-        userType: "parent",
-        canEdit: true, // Allow editing for logged-in users
-      });
+      console.log("Unknown user type");
+      navigate("/");
     }
-  };
+  } catch (err) {
+    console.error("Login failed:", err.response?.data?.message || err.message);
+    throw err;
+  }
+};
 
-  const logout = () => {
-    console.log("User logged out");
-    setUser(null);
+
+  // ✅ Logout (clears cookie on backend + context)
+  const logout = async () => {
+    try {
+      await api.post("/auth/logout");
+    } catch (err) {
+      console.error("Logout error:", err.message);
+    } finally {
+      setUser(null);
+      navigate("/login");
+    }
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, logout }}>
-      {children}
+    <AuthContext.Provider value={{ user, setUser, login, logout, loading }}>
+      {!loading && children}
     </AuthContext.Provider>
   );
 };
 
 export const useAuth = () => useContext(AuthContext);
-
 export default AuthProvider;

@@ -9,54 +9,34 @@ import { useAuth } from "./AuthProvider";
 import { useNavigate } from "react-router";
 
 const Login = () => {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [loginForm, setLoginForm] = useState({ userId: "", password: "" });
   const { login } = useAuth();
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    console.log("Form submitted");
+  e.preventDefault();
+  console.log("Form submitted");
 
-    const { userId, password } = loginForm;
+  const { userId, password } = loginForm;
 
-    if (!userId || !password) {
-      return toast.error("All fields are required");
-    }
+  if (!userId || !password) {
+    return toast.error("All fields are required");
+  }
 
-    try {
-      const response = await api.post("/auth/login", {
-        userId,
-        password,
-      });
+  try {
+    // ✅ Call AuthProvider login instead of direct axios request
+    await login(userId, password);
+    toast.success("Login Successful", { duration: 1200 });
 
-      if (response.data.userId) {
-        toast.success("Login Successful", { duration: 1200});
+    // Clear form after login
+    setLoginForm({ userId: "", password: "" });
+  } catch (error) {
+    console.error(error);
+    toast.error("Login failed. Please check your credentials.");
+  }
+};
 
-        setLoginForm({
-          userId: "",
-          password: "",
-        });
-
-        if (userId.toLowerCase().startsWith("stu")) {
-          console.log("Parent has logged in");
-          navigate("/parent/dashboard");
-        } else if (userId.toLowerCase().startsWith("tch")) {
-          console.log("Teacher has logged in");
-          navigate("/teacher/dashboard");
-        } else {
-          console.log("Unknown user type");
-          navigate("/");
-        }
-
-        // clear after navigation
-        // setLoginForm({ userId: "", password: "" });
-      }
-    } catch (error) {
-      console.error(error);
-      toast.error("Login failed. Please check your credentials.");
-    }
-  };
 
   const togglePasswordVisible = () => setPasswordVisible((prev) => !prev);
 
