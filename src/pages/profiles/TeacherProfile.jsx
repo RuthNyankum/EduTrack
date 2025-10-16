@@ -20,8 +20,8 @@ function TeacherProfile({ isModal = false }) {
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const res = await api.get("/profile"); // unified endpoint
-        const profileData = res.data.teacher || res.data.parent; // fallback if role check changes
+        const res = await api.get("/profile");
+        const profileData = res.data.teacher || res.data.parent;
         setTeacher(profileData);
         setFormData({
           phone: profileData.phone || "",
@@ -32,7 +32,6 @@ function TeacherProfile({ isModal = false }) {
         console.error("Failed to load teacher profile:", err);
       }
     };
-
     fetchProfile();
   }, []);
 
@@ -43,8 +42,8 @@ function TeacherProfile({ isModal = false }) {
       const imageUrl = URL.createObjectURL(file);
       setFormData({
         ...formData,
-        profileImage: imageUrl, // preview
-        profileImageFile: file, // for upload
+        profileImage: imageUrl,
+        profileImageFile: file,
       });
     }
   };
@@ -62,7 +61,6 @@ function TeacherProfile({ isModal = false }) {
       const res = await api.patch("/profile", data, {
         headers: { "Content-Type": "multipart/form-data" },
       });
-
       const updatedProfile = res.data.teacher || res.data.parent;
       setTeacher(updatedProfile);
       setEditMode(false);
@@ -87,16 +85,30 @@ function TeacherProfile({ isModal = false }) {
     ? "bg-white w-full rounded-xl p-6 flex flex-col md:flex-row items-center md:items-start gap-8"
     : "bg-white w-full max-w-4xl rounded-xl shadow-lg p-6 flex flex-col md:flex-row items-center md:items-start gap-8";
 
+  // ✅ Generate initials from backend firstName & lastName if no image
+  const initials =
+    teacher.initials ||
+    `${teacher.firstName?.[0]?.toUpperCase() || ""}${
+      teacher.lastName?.[0]?.toUpperCase() || ""
+    }`;
+
   return (
     <div className={containerClass}>
       <div className={cardClass}>
-        {/* Profile Image */}
+        {/* Profile Image or Initials */}
         <div className="flex-shrink-0 flex flex-col items-center font-poppins">
-          <img
-            src={formData.profileImage || teacher.profileImage || defaultImg}
-            alt="Profile"
-            className="w-40 h-40 md:w-48 md:h-48 rounded-full border-4 border-purple-600 object-cover shadow"
-          />
+          {formData.profileImage || teacher.profileImage ? (
+            <img
+              src={formData.profileImage || teacher.profileImage || defaultImg}
+              alt="Profile"
+              className="w-40 h-40 md:w-48 md:h-48 rounded-full border-4 border-purple-600 object-cover shadow"
+            />
+          ) : (
+            <div className="w-40 h-40 md:w-48 md:h-48 rounded-full border-4 border-purple-600 bg-purple-700 flex items-center justify-center text-white text-5xl font-bold shadow">
+              {initials || "?"}
+            </div>
+          )}
+
           {editMode && canEdit && (
             <input
               type="file"
@@ -111,7 +123,7 @@ function TeacherProfile({ isModal = false }) {
         <div className="w-full flex flex-col gap-4 text-center md:text-left font-poppins">
           <div>
             <h1 className="text-2xl font-bold text-purple-700">
-              {teacher.name}
+              {teacher.firstName} {teacher.lastName}
             </h1>
             <p className="text-gray-700 text-lg">{teacher.title}</p>
           </div>
