@@ -17,10 +17,11 @@ const Register = () => {
   async function handleSubmit(e) {
     e.preventDefault();
     const { firstName, lastName, phoneNumber, email, userId } = RegisterForm;
-    // console.log(RegisterForm);
+
     if (!firstName || !lastName || !phoneNumber || !userId) {
       return toast.error("All fields are required");
     }
+
     try {
       const response = await api.post("/auth/adminRegister", {
         firstName,
@@ -29,9 +30,13 @@ const Register = () => {
         phoneNumber,
         userId,
       });
+
       if (response.data.success) {
-        toast.success("Registers Login Credentials sent via email");
-        duration: 120000, navigate("/login");
+        toast.success("Register successful! Login credentials sent via email", {
+          duration: 12000, // ⏱ show longer
+        });
+
+        navigate("/login");
 
         setRegisterForm({
           firstName: "",
@@ -44,10 +49,12 @@ const Register = () => {
         toast.error(response.data.message || "Registration failed.");
       }
     } catch (error) {
-      console.log(error);
-      toast.error(response.data.message);
+      console.error(error);
+      toast.error(
+        error.response?.data?.message ||
+          "Something went wrong. Please try again."
+      );
     }
- 
   }
 
   return (

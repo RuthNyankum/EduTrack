@@ -19,9 +19,9 @@ function TeacherDashboard() {
   return (
     <div className=" mx-auto p-6 font-poppins">
       {/* <TeacherProfileHeader /> */}
-      <h1 className="text-2xl font-bold text-gray-800 mb-6">
+      {/* <h1 className="text-2xl font-bold text-gray-800 mb-6">
         Welcome Teacher {teacher.name}
-      </h1>
+      </h1> */}
 
       <div className="flex flex-wrap gap-6 mb-8">
         <div className="bg-white shadow-md rounded-xl p-4 flex-1 min-w-[200px]">

@@ -13,7 +13,8 @@ import Attendance from "./pages/features/Attendance";
 import Chat from "./pages/features/Chat";
 import TeacherDashboard from "./pages/dashboard/TeacherDashboard";
 import TeacherLayout from "./layout/TeacherLayout";
-import ParentProfile from "./pages/profiles/ParentProfile";
+// import ParentProfile from "./pages/profiles/ParentProfile";
+import StudentProfile from "./pages/profiles/StudentProfile";
 import TeacherProfile from "./pages/profiles/TeacherProfile";
 import AuthProvider from "./pages/auth/AuthProvider";
 import { TeacherProvider } from "./context/TeacherContext";
@@ -31,7 +32,7 @@ const router = createBrowserRouter([
     children: [
       { index: true, element: <Home /> },
       { path: "/login", element: <Login /> },
-      {path: "/register", element: <Register/>},
+      { path: "/register", element: <Register /> },
 
       // Parent Routes - wrapped with ParentProvider
       {
@@ -47,7 +48,8 @@ const router = createBrowserRouter([
             element: <ParentLayout />,
             children: [
               { path: "dashboard", element: <ParentDashboard /> },
-              { path: "parent-profile", element: <ParentProfile /> },
+              // { path: "parent-profile", element: <ParentProfile /> },
+              { path: "student-profile", element: <StudentProfile /> },
               { path: "subject", element: <Subject /> },
               { path: "assessment", element: <Assessment /> },
               { path: "term-report", element: <TermReport /> },
