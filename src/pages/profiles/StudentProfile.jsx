@@ -1,134 +1,95 @@
 import React, { useState, useEffect } from "react";
 import { useAuth } from "../auth/AuthProvider";
 import { api } from "../../config/axios";
-import defaultImg from "../../assets/images/profileImg.png";
 
-function TeacherProfile({ isModal = false }) {
+function StudentProfile({ isModal = false }) {
   const { user } = useAuth();
-  const [teacher, setTeacher] = useState(null);
+  const [profile, setProfile] = useState(null);
   const [editMode, setEditMode] = useState(false);
   const [imageError, setImageError] = useState(false);
   const [formData, setFormData] = useState({
     phone: "",
     profileImage: "",
-    profileImageFile: null,
-    subjectsInput: "",
+    profileFile: null,
   });
 
-  const canEdit = user?.role === "teacher" || user?.userType === "teacher";
-
-  // ✅ Helper function to construct image URL consistently
   const constructImageUrl = (imagePath) => {
     if (!imagePath) return "";
     if (imagePath.startsWith("http") || imagePath.startsWith("blob:")) {
       return imagePath;
     }
-    // Remove leading slashes and construct full URL
     const cleanPath = imagePath.replace(/^\/+/, "");
     return `http://localhost:8000/${cleanPath}`;
   };
 
-  // ✅ Fetch teacher profile
   useEffect(() => {
     const fetchProfile = async () => {
       try {
+        console.log("🔄 StudentProfile - Fetching for:", user?.userId);
         const res = await api.get("/profile");
-        const profileData = res.data.teacher || res.data.parent;
+        const profileData =
+          res.data.student || res.data.parent || res.data.teacher;
 
-        console.log("📥 Fetched profile:", profileData);
+        console.log("✅ StudentProfile - Received:", {
+          userType: profileData.userType,
+          title: profileData.title,
+          name: `${profileData.firstName} ${profileData.lastName}`,
+        });
 
-        // ✅ Subjects are now just strings
-        const subjectNames = profileData.subjects || [];
-
-        // ✅ Construct full image URL using helper
         const imageUrl = constructImageUrl(profileData.profileImage);
 
-        setTeacher(profileData);
+        setProfile(profileData);
         setFormData({
           phone: profileData.phoneNumber || profileData.phone || "",
           profileImage: imageUrl,
-          subjectsInput: subjectNames.join(", "), // Join string array
-          profileImageFile: null,
+          profileFile: null,
         });
         setImageError(false);
       } catch (err) {
-        console.error("Failed to load teacher profile:", err);
+        console.error("Failed to load student profile:", err);
       }
     };
-    fetchProfile();
-  }, []);
 
-  // ✅ Handle image change
+    fetchProfile();
+  }, [user?.userId]);
+
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
       const imageUrl = URL.createObjectURL(file);
-      setFormData({
-        ...formData,
-        profileImage: imageUrl,
-        profileImageFile: file,
-      });
+      setFormData({ ...formData, profileImage: imageUrl, profileFile: file });
       setImageError(false);
     }
   };
 
-  // ✅ Save updated profile
   const handleSave = async () => {
-    const data = new FormData();
-    data.append("phone", formData.phone);
-    data.append("subjectsInput", formData.subjectsInput);
-    if (formData.profileImageFile) {
-      data.append("profileImage", formData.profileImageFile);
-    }
-
     try {
-      console.log("📤 Sending data:", {
-        phone: formData.phone,
-        subjectsInput: formData.subjectsInput,
-        hasImage: !!formData.profileImageFile,
-      });
+      const form = new FormData();
+      form.append("phone", formData.phone);
+      if (formData.profileFile) {
+        form.append("profileImage", formData.profileFile);
+      }
 
-      const res = await api.patch("/profile", data, {
+      const res = await api.patch("/profile", form, {
         headers: { "Content-Type": "multipart/form-data" },
       });
 
-      console.log("📥 Response:", res.data);
+      const updatedProfile = res.data.parent || res.data.teacher;
+      const imageUrl = updatedProfile.profileImage
+        ? `${constructImageUrl(updatedProfile.profileImage)}?t=${Date.now()}`
+        : "";
 
-      const updatedProfile = res.data.teacher || res.data.parent;
-
-      console.log("📥 Updated profile response:", updatedProfile);
-
-      // ✅ Subjects are now just strings
-      const subjectNames = updatedProfile.subjects || [];
-
-      // ✅ Construct full image URL with timestamp to force browser refresh
-      let imageUrl = "";
-      if (updatedProfile.profileImage) {
-        imageUrl = `${constructImageUrl(
-          updatedProfile.profileImage
-        )}?t=${Date.now()}`;
-      }
-
-      console.log("🖼️ New image URL with cache buster:", imageUrl);
-
-      // ✅ Update both teacher state AND formData to trigger re-render
-      setTeacher({ ...updatedProfile });
+      setProfile(updatedProfile);
       setFormData({
         phone: updatedProfile.phoneNumber || updatedProfile.phone || "",
         profileImage: imageUrl,
-        profileImageFile: null,
-        subjectsInput: subjectNames.join(", "),
+        profileFile: null,
       });
-
-      // Reset image error state
-      setImageError(false);
       setEditMode(false);
-
+      setImageError(false);
       alert("Profile updated successfully!");
     } catch (err) {
-      console.error("Failed to update profile:", err);
-      console.error("Error response:", err.response);
-      console.error("Error details:", err.response?.data);
+      console.error("Failed to update student profile:", err);
       alert(
         `Failed to update profile: ${
           err.response?.data?.message || err.message
@@ -137,19 +98,24 @@ function TeacherProfile({ isModal = false }) {
     }
   };
 
-  // ✅ Handle image load error
   const handleImageError = () => {
     console.error("Failed to load image:", formData.profileImage);
     setImageError(true);
   };
 
-  if (!teacher) {
+  if (!profile) {
     return (
       <div className="flex justify-center items-center h-screen text-gray-600">
         Loading profile...
       </div>
     );
   }
+
+  const initials = `${profile.firstName?.charAt(0).toUpperCase() || ""}${
+    profile.lastName?.charAt(0).toUpperCase() || ""
+  }`;
+
+  const shouldShowImage = formData.profileImage && !imageError;
 
   const containerClass = isModal
     ? "w-full bg-white"
@@ -158,16 +124,6 @@ function TeacherProfile({ isModal = false }) {
   const cardClass = isModal
     ? "bg-white w-full rounded-xl flex flex-col md:flex-row h-full"
     : "bg-white w-full max-w-6xl rounded-xl shadow-lg flex flex-col md:flex-row overflow-hidden";
-
-  // ✅ Generate initials from backend firstName & lastName if no image
-  const initials =
-    teacher.initials ||
-    `${teacher.firstName?.[0]?.toUpperCase() || ""}${
-      teacher.lastName?.[0]?.toUpperCase() || ""
-    }`;
-
-  // ✅ Determine what to display
-  const shouldShowImage = formData.profileImage && !imageError;
 
   return (
     <div className={containerClass}>
@@ -187,7 +143,7 @@ function TeacherProfile({ isModal = false }) {
             </div>
           )}
 
-          {editMode && canEdit && (
+          {editMode && (
             <div className="mt-6">
               <label className="bg-white text-purple-700 px-6 py-3 rounded-lg font-semibold cursor-pointer hover:bg-purple-50 transition shadow-lg">
                 <input
@@ -208,81 +164,43 @@ function TeacherProfile({ isModal = false }) {
             {/* Name & Title */}
             <div>
               <h1 className="text-3xl md:text-4xl font-bold text-purple-700 mb-2">
-                {teacher.firstName} {teacher.lastName}
+                {profile.firstName} {profile.lastName}
               </h1>
-              <p className="text-gray-600 text-xl font-medium">
-                {teacher.title}
-              </p>
+              <p className="text-gray-600 text-xl font-medium">Student</p>
             </div>
 
             {/* Email */}
             <div>
               <label className="block text-gray-500 text-sm font-semibold mb-2 uppercase tracking-wide">
-                Email Address
+                Email Address (Guardian)
               </label>
               <p className="text-lg text-gray-700 break-words flex items-center gap-2">
-                <span className="text-2xl">📧</span> {teacher.email}
+                <span className="text-2xl">📧</span> {profile.email}
               </p>
             </div>
 
             {/* Phone */}
             <div>
               <label className="block text-gray-500 text-sm font-semibold mb-2 uppercase tracking-wide">
-                Phone Number
+                Phone Number (Guardian)
               </label>
-              {editMode && canEdit ? (
+              {editMode ? (
                 <input
                   type="text"
+                  inputMode="numeric"
                   value={formData.phone}
-                  onChange={(e) =>
-                    setFormData({
-                      ...formData,
-                      phone: e.target.value.replace(/\D/g, ""),
-                    })
-                  }
+                  onChange={(e) => {
+                    const numbersOnly = e.target.value.replace(/\D/g, "");
+                    setFormData({ ...formData, phone: numbersOnly });
+                  }}
                   className="border-2 border-gray-300 px-4 text-gray-700 py-3 rounded-lg w-full focus:border-purple-500 focus:outline-none text-lg"
                   placeholder="Enter phone number"
                 />
               ) : (
                 <p className="text-lg text-gray-700 flex items-center gap-2">
                   <span className="text-2xl">📱</span>{" "}
-                  {teacher.phoneNumber || teacher.phone || "Not provided"}
+                  {profile.phoneNumber || profile.phone || "Not provided"}
                 </p>
-              )}
-            </div>
-
-            {/* Subjects */}
-            <div>
-              <label className="block text-gray-500 text-sm font-semibold mb-3 uppercase tracking-wide">
-                Subjects Taught
-              </label>
-              {editMode && canEdit ? (
-                <input
-                  type="text"
-                  value={formData.subjectsInput}
-                  onChange={(e) =>
-                    setFormData({ ...formData, subjectsInput: e.target.value })
-                  }
-                  placeholder="e.g. English, Math, Science"
-                  className="w-full border-2 border-gray-300 rounded-lg text-gray-700 px-4 py-3 focus:border-purple-500 focus:outline-none text-lg"
-                />
-              ) : (
-                <div className="flex flex-wrap gap-3">
-                  {teacher.subjects?.length > 0 ? (
-                    teacher.subjects.map((subject, i) => (
-                      <span
-                        key={i}
-                        className="bg-purple-100 text-purple-800 px-4 py-2 rounded-full text-base font-semibold border-2 border-purple-300"
-                      >
-                        {typeof subject === "string" ? subject : subject.name}
-                      </span>
-                    ))
-                  ) : (
-                    <p className="text-gray-500 italic text-lg">
-                      No subjects listed
-                    </p>
-                  )}
-                </div>
               )}
             </div>
 
@@ -303,17 +221,13 @@ function TeacherProfile({ isModal = false }) {
                     Cancel
                   </button>
                 </div>
-              ) : canEdit ? (
+              ) : (
                 <button
                   onClick={() => setEditMode(true)}
                   className="bg-purple-600 text-white px-8 py-3 rounded-lg hover:bg-purple-700 transition font-semibold text-lg shadow-lg"
                 >
                   ✏️ Edit Profile
                 </button>
-              ) : (
-                <p className="text-gray-600 text-base italic">
-                  Profile editing not available
-                </p>
               )}
             </div>
           </div>
@@ -323,4 +237,4 @@ function TeacherProfile({ isModal = false }) {
   );
 }
 
-export default TeacherProfile;
+export default StudentProfile;

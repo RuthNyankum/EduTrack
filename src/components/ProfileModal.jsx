@@ -1,7 +1,7 @@
 import React from "react";
 import { X } from "lucide-react";
 import { useAuth } from "../pages/auth/AuthProvider";
-import ParentProfile from "../pages/profiles/ParentProfile";
+import StudentProfile from "../pages/profiles/StudentProfile";
 import TeacherProfile from "../pages/profiles/TeacherProfile";
 
 function ProfileModal({ isOpen, onClose }) {
@@ -9,7 +9,16 @@ function ProfileModal({ isOpen, onClose }) {
 
   if (!isOpen || !user) return null;
 
-  const userRole = user.role || user.userType || "teacher";
+  // Better role detection
+  const userRole = user.role || user.userType;
+  const isTeacher = userRole === "teacher";
+
+  console.log(
+    "👤 ProfileModal - User role:",
+    userRole,
+    "isTeacher:",
+    isTeacher
+  );
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center font-poppins">
@@ -31,11 +40,7 @@ function ProfileModal({ isOpen, onClose }) {
 
         {/* Profile Content */}
         <div className="overflow-y-auto max-h-[90vh] p-6 pt-16">
-          {userRole === "teacher" ? (
-            <TeacherProfile isModal />
-          ) : (
-            <ParentProfile isModal />
-          )}
+          {isTeacher ? <TeacherProfile isModal /> : <StudentProfile isModal />}
         </div>
       </div>
     </div>

@@ -7,16 +7,19 @@ const AuthProvider = ({ children }) => {
   const location = useLocation();
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true); // new: track loading state
+  const [loading, setLoading] = useState(true);
 
-  // ✅ Fetch logged-in user when app loads
+  // Fetch logged-in user when app loads
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const res = await api.get("/auth/profile"); // backend should use JWT cookie
+        const res = await api.get("/auth/profile");
         setUser(res.data.user);
       } catch (err) {
-        console.log("No active session:", err.response?.data?.message || err.message);
+        console.log(
+          "No active session:",
+          err.response?.data?.message || err.message
+        );
         setUser(null);
       } finally {
         setLoading(false);
@@ -25,32 +28,34 @@ const AuthProvider = ({ children }) => {
     fetchUser();
   }, []);
 
-  // ✅ Login function (handles redirection based on userId)
-const login = async (userId, password) => {
-  try {
-    const res = await api.post("/auth/login", { userId, password });
-    const user = res.data.user;
-    setUser(user);
+  // Login function (handles redirection based on userId)
+  const login = async (userId, password) => {
+    try {
+      const res = await api.post("/auth/login", { userId, password });
+      const user = res.data.user;
+      setUser(user);
 
-    // ✅ Redirect user based on userId prefix
-    if (user.userId.toLowerCase().startsWith("tch")) {
-      console.log("Teacher logged in");
-      navigate("/teacher/dashboard");
-    } else if (user.userId.toLowerCase().startsWith("stu")) {
-      console.log("Parent logged in");
-      navigate("/parent/dashboard");
-    } else {
-      console.log("Unknown user type");
-      navigate("/");
+      // Redirect user based on userId prefix
+      if (user.userId.toLowerCase().startsWith("tch")) {
+        console.log("Teacher logged in");
+        navigate("/teacher/dashboard");
+      } else if (user.userId.toLowerCase().startsWith("stu")) {
+        console.log("Parent logged in");
+        navigate("/parent/dashboard");
+      } else {
+        console.log("Unknown user type");
+        navigate("/");
+      }
+    } catch (err) {
+      console.error(
+        "Login failed:",
+        err.response?.data?.message || err.message
+      );
+      throw err;
     }
-  } catch (err) {
-    console.error("Login failed:", err.response?.data?.message || err.message);
-    throw err;
-  }
-};
+  };
 
-
-  // ✅ Logout (clears cookie on backend + context)
+  // Logout (clears cookie on backend + context)
   const logout = async () => {
     try {
       await api.post("/auth/logout");
